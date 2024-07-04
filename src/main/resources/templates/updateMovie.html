@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Watchlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .header .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .header .auth-buttons a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .header .auth-buttons a:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+        .movie-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .movie-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #ddd;
+            padding: 30px;
+            border-radius: 5px;
+            background-color: #F8FDFC;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .movie-image {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .movie-details {
+            text-align: center;
+        }
+        .movie-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .movie-meta {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>My Watchlist</h1>
+        <div class="auth-buttons">
+            <a th:href="@{/profile(username=${username})}">Profile</a>
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="movie-list">
+            <div th:each="movie : ${movies}" class="movie-item">
+                <img class="movie-image" th:src="${movie.url}" th:alt="${movie.title}">
+                <div class="movie-details">
+                    <div class="movie-title" th:text="${movie.title}"></div>
+                    <div class="movie-meta" th:text="'Directed by ' + ${movie.director}"></div>
+                    <div class="movie-meta" th:text="'Released in ' + ${movie.releaseYear}"></div>
+                    <div class="movie-meta" th:text="'Genre: ' + ${movie.genre}"></div>
+                    <div class="movie-meta" th:text="'Rating: ' + ${movie.rating}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
