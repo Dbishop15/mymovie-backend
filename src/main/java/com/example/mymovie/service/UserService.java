@@ -16,15 +16,11 @@ public interface UserService {
 
 	public User saveUser(User user);
 	
-    public User findByUsername(String username);
-    public User findByEmail(String email);
+//    public User findByUsername(String username);
+//    
+//    public User findByEmail(String email);
 
 	public User loginUser(String username, String password);
     
-//	
-//	public User saveUser1(User user);
-
-//    public User loginUser(String username, String password);
-	    
 
 }
