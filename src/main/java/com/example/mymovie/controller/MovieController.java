@@ -44,14 +44,12 @@ public class MovieController {
         return new ResponseEntity<>(movies, HttpStatus.OK);
         
     }
-    //puttingdsfljdfljsfd;ljsa;fldjs;dlfjs;lfdjas;ldfj
+  
     @PutMapping("/movies/{id}/watchlist")
     public ResponseEntity<Movie1> updateWatchlistStatus(@PathVariable Integer id, @RequestParam boolean status) {
         Movie1 updatedMovie = movieService.updateWatchlistStatus(id, status);
         return ResponseEntity.ok(updatedMovie);
     }
-
-   //dsadfsadfsadfsdf
     
     @GetMapping("/movies/watchlist")
     public ResponseEntity<List<Movie1>> getMovies(@RequestParam(value = "watchlist", required = false) Boolean watchlist) {
