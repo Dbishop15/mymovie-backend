@@ -1,15 +1,7 @@
 package com.example.mymovie.controller;
-import org.springframework.ui.Model;
-
-import com.example.mymovie.MymovieApplication;
-import com.example.mymovie.dao.MovieRepository;
 import com.example.mymovie.model.Movie1;
-import com.example.mymovie.model.User;
 import com.example.mymovie.service.MovieService;
 import com.example.mymovie.service.UserService;
-
-//import ch.qos.logback.core.model.Model;
-import jakarta.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 
 @Controller
@@ -30,10 +20,8 @@ public class MovieController {
     MovieService movieService;
     
     @Autowired
-    private UserService userService;
+    UserService userService;
     
-    @Autowired
-    private MovieRepository movieRepository;
     
     private final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
@@ -90,10 +78,20 @@ public class MovieController {
     }
     
     @GetMapping("/movies/user/{userId}/watchlist")
-    public ResponseEntity<List<Movie1>> getUserWatchlist(@PathVariable Integer userId) {
-        List<Movie1> watchlistMovies = movieService.getUserWatchlist(userId);
-        return new ResponseEntity<>(watchlistMovies, HttpStatus.OK);
+    public ResponseEntity<?> getUserWatchlist(@PathVariable Integer userId) {
+        try {
+            List<Movie1> watchlist = userService.getUserWatchlist(userId);
+            System.out.println("Watchlist data: " + watchlist); // Debugging log
+            if (watchlist == null) {
+                return new ResponseEntity<>("Watchlist not found", HttpStatus.NOT_FOUND);
+            }
+            return ResponseEntity.ok(watchlist);
+        } catch (Exception e) {
+            System.err.println("Error fetching watchlist: " + e.getMessage());
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
     
     @PutMapping("/movies/{id}/watchlist")

@@ -2,13 +2,16 @@ package com.example.mymovie.service.impl;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.mymovie.exceptions.UserNotFoundException;
+import com.example.mymovie.model.Movie1;
 import com.example.mymovie.model.User;
 import com.example.mymovie.service.UserService;
 import com.example.mymovie.dao.UserRepository;
@@ -19,24 +22,58 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
 	
-	public User saveUser(User user) {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public User saveUser(User user) {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new IllegalArgumentException("Username already exists");
         }
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getRoles() == null) {
+            user.setRoles(new HashSet<>());
+            user.getRoles().add("ROLE_USER");
+        }
         return userRepository.save(user);
     }
-	
-	@Override
+    public Optional<User> findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
     public User loginUser(String username, String password) {
-        User user = userRepository.findByUsername(username);
-        if (user == null || !user.getPassword().equals(password)) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+        if (!optionalUser.isPresent()) {
             throw new UserNotFoundException("Invalid username or password");
         }
+
+        User user = optionalUser.get();
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new UserNotFoundException("Invalid username or password");
+        }
+
         return user;
     }
+	
+//	public User saveUser(User user) {
+//        if (userRepository.existsByUsername(user.getUsername())) {
+//            throw new IllegalArgumentException("Username already exists");
+//        }
+//        if (userRepository.existsByEmail(user.getEmail())) {
+//            throw new IllegalArgumentException("Email already exists");
+//        }
+//        return userRepository.save(user);
+//    }
+//	
+//	@Override
+//    public User loginUser(String username, String password) {
+//        User user = userRepository.findByUsername(username);
+//        if (user == null || !user.getPassword().equals(password)) {
+//            throw new UserNotFoundException("Invalid username or password");
+//        }
+//        return user;
+//    }
 	
 	@Override
 	public List<User> findAllUsers() {
@@ -91,6 +128,17 @@ public class UserServiceImpl implements UserService {
         }
 		
 	}
+	@Override
+	public List<Movie1> getUserWatchlist(Integer userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void updateWatchlistStatus(Integer id, Integer movieId, boolean status) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	 
 	 

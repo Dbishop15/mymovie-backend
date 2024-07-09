@@ -20,10 +20,6 @@ public interface MovieService {
 	public List<Movie1> getWatchlistMovies();
 	public List<Movie1> getMoviesByUserId(Integer userId);
 
-//	public List<Movie1> getMoviesByUser(User user);
-//	public Movie1 updateWatchlist(Integer id, boolean addToWatchlist);
-//	public List<Movie1> getWatchlistByUser(User user);
-//	public Movie1 updateWatchlist(int id, boolean watchlist);
 
 
 

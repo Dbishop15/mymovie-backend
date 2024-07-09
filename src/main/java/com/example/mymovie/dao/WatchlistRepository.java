@@ -1,6 +1,7 @@
 package com.example.mymovie.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -18,5 +19,7 @@ public interface WatchlistRepository extends JpaRepository<Watchlist, Integer> {
 	
 	public void deleteByUserIdAndMovieId(Integer userId, Integer movieId);
 	public void deleteByMovieId(Integer movieId);
-//	public void deleteByMovieId(Integer id);
+	public List<Watchlist> findByUser(User user);
+    public Optional<Watchlist> findByUserAndMovie(User user, Movie1 movie);
+
 }

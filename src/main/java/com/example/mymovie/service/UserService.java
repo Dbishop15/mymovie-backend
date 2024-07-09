@@ -1,7 +1,9 @@
 package com.example.mymovie.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.example.mymovie.model.Movie1;
 import com.example.mymovie.model.User;
 
 public interface UserService {
@@ -21,6 +23,12 @@ public interface UserService {
 //    public User findByEmail(String email);
 
 	public User loginUser(String username, String password);
+
+	public Optional<User> findUserByUsername(String username);
+
+	public List<Movie1> getUserWatchlist(Integer userId);
+
+	public void updateWatchlistStatus(Integer id, Integer movieId, boolean status);
     
 
 }
