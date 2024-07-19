@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.mymovie.model.User;
 import com.example.mymovie.service.UserService;
@@ -26,14 +27,14 @@ import com.example.mymovie.util.JwtUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@Controller
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RestController
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    private final Logger logger = LoggerFactory.getLogger(UserController.class);
+//    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private AuthenticationManager authenticationManager;

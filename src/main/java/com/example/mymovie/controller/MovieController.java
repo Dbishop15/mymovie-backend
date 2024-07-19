@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@Controller
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RestController
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MovieController {
 	
     @Autowired
@@ -23,7 +23,7 @@ public class MovieController {
     UserService userService;
     
     
-    private final Logger logger = LoggerFactory.getLogger(MovieController.class);
+//    private final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
 
     @GetMapping("/movies")
@@ -46,7 +46,7 @@ public class MovieController {
     @PostMapping("/movies")
     public ResponseEntity<Movie1> saveMovie(@RequestBody Movie1 movie1) {
         Movie1 savedMovie = movieService.saveMovie(movie1);
-        return new ResponseEntity<>(savedMovie, HttpStatus.OK);
+        return new ResponseEntity<>(savedMovie, HttpStatus.CREATED);
     }
   
     @PutMapping("/movies/{id}")
